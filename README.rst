@@ -14,5 +14,30 @@ See the `tracking issue`_ in my About repository.
 
     What will it find?
 
+How to run the bot
+------------------
+
+You can either manually install the two dependencies required to run the
+application::
+
+    pip install pronouncing
+    pip install tweepy
+
+or install all development and production dependencies from the requirements
+file::
+
+    pip install -r requirements.txt
+
+The following environment variables must be set to authenticate with the Twitter
+API:
+
+ - ``TWITTER_API_KEY``
+ - ``TWITTER_API_SECRET``
+ - ``TWITTER_ACCESS_TOKEN``
+ - ``TWITTER_ACCESS_TOKEN_SECRET``
+
+See `the Tweepy Authentication tutorial`_ for more information.
+
 .. _@eleanorrigbot: https://twitter.com/eleanorrigbot
+.. _the Tweepy Authentication tutorial: http://tweepy.readthedocs.io/en/v3.5.0/auth_tutorial.html
 .. _tracking issue: https://github.com/textbook/about/issues/12

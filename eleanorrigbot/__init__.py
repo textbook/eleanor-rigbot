@@ -4,6 +4,7 @@
 
 """
 
+from .authenticate import get_authentication
 from .classify import phrase_matches
 
 __author__ = 'Jonathan Sharpe'

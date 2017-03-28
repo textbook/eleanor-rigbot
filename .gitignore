@@ -147,3 +147,5 @@ pyvenv.cfg
 .venv
 pip-selfcheck.json
 
+# local keys and secrets
+secrets

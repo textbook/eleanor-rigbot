@@ -1,8 +1,6 @@
 """Functionality for classifying phrases extracted from tweets."""
 
-from nltk.corpus import cmudict
-
-_PRONUNCIATIONS = cmudict.dict()
+from pronouncing import phones_for_word, rhymes, syllable_count
 
 
 def phrase_matches(phrase):
@@ -36,9 +34,6 @@ def phrase_matches(phrase):
 def _lines_rhyme(first, second):
     """Whether the two supplied lines rhyme.
 
-    Rhyming is defined here as the last word of each line containing
-    the same final syllable.
-
     Arguments:
       first (:py:class:`list`): The first line as a list of words.
       second (:py:class:`list`): The second line as a list of words.
@@ -47,11 +42,10 @@ def _lines_rhyme(first, second):
       :py:class:`bool`: Whether the lines rhyme.
 
     """
-    first_phonemes = _phonemes_in_word(first[-1])
-    second_phonemes = _phonemes_in_word(second[-1])
-    first_syllable = _syllables(first_phonemes)[-1]
-    second_syllable = _syllables(second_phonemes)[-1]
-    return first_syllable[:-1] == second_syllable[:-1]
+    first_line_last_word = first[-1]
+    second_line_last_word = second[-1]
+    return (first_line_last_word in rhymes(second_line_last_word)
+            or second_line_last_word in rhymes(first_line_last_word))
 
 
 def _calculate_total_syllables(words_and_syllables):
@@ -111,41 +105,6 @@ def _syllables_in_word(word):
         if the count could not be calculated).
 
     """
-    try:
-        phonemes = _phonemes_in_word(word)
-    except KeyError:
-        return
-    return len(_syllables(phonemes))
-
-
-def _phonemes_in_word(word):
-    """Returns the phonemes in the word from the first pronunciation.
-
-    Arguments:
-      word (:py:class:`str`): The word to calculate the syllable count
-        for.
-
-    Returns:
-      :py:class:`list`: The phonemes in the word.
-
-    Raises:
-      :py:class:`KeyError`: If the word has no pronunciations in the
-        corpus.
-
-    """
-    return _PRONUNCIATIONS[word][0]
-
-
-def _syllables(phonemes):
-    """Extract the syllables from the phonemes.
-
-    See http://stackoverflow.com/a/4103234/3001761
-
-    Arguments:
-      phonemes (:py:class:`list`): The phonemes in the word.
-
-    Returns:
-      :py:class:`list`: The syllables in those phonemes.
-
-    """
-    return [phoneme for phoneme in phonemes if phoneme[-1].isdigit()]
+    phones = phones_for_word(word)
+    if phones:
+        return syllable_count(phones[0])

@@ -34,6 +34,19 @@ def phrase_matches(phrase):
 
 
 def _lines_rhyme(first, second):
+    """Whether the two supplied lines rhyme.
+
+    Rhyming is defined here as the last word of each line containing
+    the same final syllable.
+
+    Arguments:
+      first (:py:class:`list`): The first line as a list of words.
+      second (:py:class:`list`): The second line as a list of words.
+
+    Returns:
+      :py:class:`bool`: Whether the lines rhyme.
+
+    """
     first_phonemes = _phonemes_in_word(first[-1])
     second_phonemes = _phonemes_in_word(second[-1])
     first_syllable = _syllables(first_phonemes)[-1]
@@ -124,4 +137,15 @@ def _phonemes_in_word(word):
 
 
 def _syllables(phonemes):
+    """Extract the syllables from the phonemes.
+
+    See http://stackoverflow.com/a/4103234/3001761
+
+    Arguments:
+      phonemes (:py:class:`list`): The phonemes in the word.
+
+    Returns:
+      :py:class:`list`: The syllables in those phonemes.
+
+    """
     return [phoneme for phoneme in phonemes if phoneme[-1].isdigit()]

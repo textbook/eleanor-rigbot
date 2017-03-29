@@ -1,6 +1,9 @@
 """Functionality for classifying phrases extracted from tweets."""
+import logging
 
 from pronouncing import phones_for_word, rhymes, syllable_count
+
+logger = logging.getLogger('__name__')
 
 
 def phrase_matches(phrase):
@@ -23,8 +26,10 @@ def phrase_matches(phrase):
     """
     words = phrase.split()
     words_and_syllables = [(word, _syllables_in_word(word)) for word in words]
+    logger.debug('processing tweet: %r', phrase)
     if _calculate_total_syllables(words_and_syllables) != 22:
         return False
+    logger.info('22 syllable tweet: %r', phrase)
     sub_phrases = _greedy_match_syllable_pattern(words_and_syllables)
     if sub_phrases is None:
         return False

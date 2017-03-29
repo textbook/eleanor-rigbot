@@ -1,3 +1,5 @@
+from unittest.mock import patch
+
 import pytest
 
 from eleanorrigbot import phrase_matches
@@ -34,3 +36,12 @@ from eleanorrigbot import phrase_matches
 ])
 def test_phrase_classification(input_, output):
     assert phrase_matches(input_) == output
+
+
+@patch('eleanorrigbot.classify.logger')
+def test_logging(mock_logger):
+    text = ('over wing exit leaving the plane as it falls like a stone from '
+            'the sky final goodbye')
+    phrase_matches(text)
+    mock_logger.debug.assert_called_once_with('processing tweet: %r', text)
+    mock_logger.info.assert_called_once_with('22 syllable tweet: %r', text)

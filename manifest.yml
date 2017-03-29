@@ -1,0 +1,8 @@
+---
+applications:
+- name: eleanor-rigbot
+  buildpack: python_buildpack
+  command: python launch.py
+  disk_quota: 512M
+  memory: 256M
+  no-route: true

@@ -3,7 +3,7 @@ import logging
 
 from pronouncing import phones_for_word, rhymes, syllable_count
 
-logger = logging.getLogger('__name__')
+logger = logging.getLogger(__name__)
 
 
 def phrase_matches(phrase):

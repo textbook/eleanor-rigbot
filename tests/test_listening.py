@@ -20,18 +20,20 @@ def create_tweet(id_, text):
 
 def test_listener_match(api):
     filterer = Mock(return_value=True)
+    extractor = Mock(return_value='hello world')
 
-    listener = RetweetListener(api, filterer)
+    listener = RetweetListener(api=api, extractor=extractor, filterer=filterer)
 
-    listener.on_status(create_tweet(123, 'hello world'))
+    listener.on_status(create_tweet(123, 'foo bar baz'))
     filterer.assert_called_once_with('hello world')
+    extractor.assert_called_once_with('foo bar baz')
     api.retweet.assert_called_once_with(123)
 
 
 def test_listener_no_match(api):
     filterer = Mock(return_value=False)
 
-    listener = RetweetListener(api, filterer)
+    listener = RetweetListener(api, filterer=filterer)
 
     listener.on_status(create_tweet(123, 'hello world'))
     filterer.assert_called_once_with('hello world')

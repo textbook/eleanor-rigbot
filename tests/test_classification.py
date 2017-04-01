@@ -43,5 +43,17 @@ def test_logging(mock_logger):
     text = ('over wing exit leaving the plane as it falls like a stone from '
             'the sky final goodbye')
     phrase_matches(text)
-    mock_logger.debug.assert_called_once_with('processing tweet: %r', text)
-    mock_logger.info.assert_called_once_with('22 syllable tweet: %r', text)
+    mock_logger.debug.assert_called_once_with(
+        'processing %s-syllable tweet: %r',
+        22,
+        text
+    )
+    mock_logger.info.assert_called_once_with(
+        'tweet matches syllable pattern: %r',
+        [
+            ['over', 'wing', 'exit'],
+            ['leaving', 'the', 'plane'],
+            ['as', 'it', 'falls', 'like', 'a', 'stone', 'from', 'the', 'sky'],
+            ['final', 'goodbye'],
+        ]
+    )

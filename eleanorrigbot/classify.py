@@ -26,13 +26,14 @@ def phrase_matches(phrase):
     """
     words = phrase.split()
     words_and_syllables = [(word, _syllables_in_word(word)) for word in words]
-    logger.debug('processing tweet: %r', phrase)
-    if _calculate_total_syllables(words_and_syllables) != 22:
+    total_syllables = _calculate_total_syllables(words_and_syllables)
+    logger.debug('processing %s-syllable tweet: %r', total_syllables, phrase)
+    if total_syllables != 22:
         return False
-    logger.info('22 syllable tweet: %r', phrase)
     sub_phrases = _greedy_match_syllable_pattern(words_and_syllables)
     if sub_phrases is None:
         return False
+    logger.info('tweet matches syllable pattern: %r', sub_phrases)
     return _lines_rhyme(*sub_phrases[-2:])
 
 

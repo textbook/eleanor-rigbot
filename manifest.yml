@@ -1,8 +1,9 @@
 ---
 applications:
 - name: eleanor-rigbot
-  buildpack: python_buildpack
+  buildpack: https://github.com/cloudfoundry/python-buildpack.git#v1.5.14
   command: python launch.py
   disk_quota: 512M
   memory: 256M
   no-route: true
+  health-check-type: process

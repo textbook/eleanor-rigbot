@@ -1,6 +1,6 @@
 """Authenticate application from environment variables."""
 import logging
-from os import environ
+from os import getenv
 
 from tweepy import OAuthHandler
 
@@ -17,8 +17,8 @@ def get_authentication():
 def _create_handler():
     """Create an OAuth handler."""
     try:
-        consumer_key = environ['TWITTER_API_KEY']
-        consumer_secret = environ['TWITTER_API_SECRET']
+        consumer_key = getenv('TWITTER_API_KEY')
+        consumer_secret = getenv('TWITTER_API_SECRET')
     except KeyError:
         logger.exception('missing consumer authentication parameter')
         raise
@@ -28,8 +28,8 @@ def _create_handler():
 def _set_token(auth):
     """Set the access token."""
     try:
-        key = environ['TWITTER_ACCESS_TOKEN']
-        secret = environ['TWITTER_ACCESS_TOKEN_SECRET']
+        key = getenv('TWITTER_ACCESS_TOKEN')
+        secret = getenv('TWITTER_ACCESS_TOKEN_SECRET')
     except KeyError:
         logger.exception('missing access token authentication parameter')
         raise

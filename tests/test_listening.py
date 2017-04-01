@@ -1,5 +1,4 @@
-from unittest.mock import Mock, patch
-
+from mock import Mock, patch
 import pytest
 from tweepy import API, Status
 

@@ -1,5 +1,4 @@
-from unittest.mock import patch
-
+from mock import patch
 import pytest
 
 from eleanorrigbot import phrase_matches

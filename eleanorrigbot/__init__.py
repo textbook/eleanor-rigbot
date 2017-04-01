@@ -18,7 +18,7 @@ LIVERPOOL = [-3.0087, 53.3261, -2.8180, 53.4751]
 logging.getLogger(__name__).addHandler(logging.NullHandler())
 
 __author__ = 'Jonathan Sharpe'
-__version__ = '0.0.1'
+__version__ = '0.1.0'
 
 
 def start_listening():

@@ -1,0 +1,13 @@
+.cache/
+.eggs/
+*.egg-info/
+bin/
+build/
+dist/
+tests/
+
+.gitignore
+.pylintrc
+LICENSE
+README.rst
+secrets

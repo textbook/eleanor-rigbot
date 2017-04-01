@@ -1,5 +1,4 @@
-from unittest.mock import patch
-
+from mock import patch
 import pytest
 
 from eleanorrigbot import get_authentication
@@ -12,9 +11,9 @@ ENV = dict(
 )
 
 
-@patch.dict('eleanorrigbot.authenticate.environ', ENV)
+@patch('eleanorrigbot.authenticate.getenv', side_effect=ENV.__getitem__)
 @patch('eleanorrigbot.authenticate.OAuthHandler')
-def test_oauth_creation(mock_oauth):
+def test_oauth_creation(mock_oauth, _):
     assert get_authentication() is mock_oauth.return_value
     mock_oauth.assert_called_once_with(
         ENV['TWITTER_API_KEY'],
@@ -26,21 +25,21 @@ def test_oauth_creation(mock_oauth):
     )
 
 
-@patch.dict('eleanorrigbot.authenticate.environ', {})
+@patch('eleanorrigbot.authenticate.getenv', side_effect=KeyError)
 @patch('eleanorrigbot.authenticate.logger')
-def test_create_logging(mock_logger):
+def test_create_logging(mock_logger, _):
     with pytest.raises(KeyError):
         get_authentication()
 
     mock_logger.exception.assert_called_once()
 
 
-@patch.dict(
-    'eleanorrigbot.authenticate.environ',
-    dict(TWITTER_API_KEY='foo', TWITTER_API_SECRET='bar')
+@patch(
+    'eleanorrigbot.authenticate.getenv',
+    side_effect=dict(TWITTER_API_KEY='foo', TWITTER_API_SECRET='bar').__getitem__
 )
 @patch('eleanorrigbot.authenticate.logger')
-def test_set_token_logging(mock_logger):
+def test_set_token_logging(mock_logger, _):
     with pytest.raises(KeyError):
         get_authentication()
 

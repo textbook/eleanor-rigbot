@@ -32,4 +32,4 @@ class RetweetListener(StreamListener):
     def on_error(self, status_code):
         """Called when an error occurs."""
         logger.error('streaming error %s', status_code)
-        return super().on_error(status_code)
+        return super(RetweetListener, self).on_error(status_code)

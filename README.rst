@@ -17,19 +17,10 @@ See the `tracking issue`_ in my About repository.
 How to run the bot
 ------------------
 
-You can either manually install the two dependencies required to run the
-application::
+You can install and launch the application using::
 
-    pip install pronouncing tweepy
-
-or install all development and production dependencies from the requirements
-file::
-
-    pip install -r requirements.txt
-
-Then you can start the application using::
-
-    python launch.py
+    python setup.py install
+    launch_rigbot.py
 
 or ``cf push`` it to `Cloud Foundry`_ using the manifest file (note that you
 will need to explicitly deactivate the health check, see `the CF docs`_).
@@ -46,6 +37,19 @@ API:
  - ``TWITTER_ACCESS_TOKEN_SECRET``
 
 See `the Tweepy Authentication tutorial`_ for more information.
+
+Development
+-----------
+
+To install for development, install the package and all of its requirements
+with::
+
+    pip install -r requirements.txt
+    python setup.py develop
+
+You can run the tests with::
+
+    python setup.py test
 
 .. _@eleanorrigbot: https://twitter.com/eleanorrigbot
 .. _Cloud Foundry: https://www.cloudfoundry.org/

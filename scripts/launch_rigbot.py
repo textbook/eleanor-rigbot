@@ -1,3 +1,5 @@
+#!/usr/bin/env python
+"""Configure logging and start the process."""
 import logging
 import sys
 

@@ -18,7 +18,10 @@ def extract_phrase(text):
 
 def _clean_text(text):
     """Find the longest substring of 'clean' characters in the text."""
-    return max(CLEAN_TEXT.findall(text), key=len)
+    clean_strings = CLEAN_TEXT.findall(text)
+    if clean_strings:
+        return max(clean_strings, key=len)
+    return ''
 
 
 def _rejoin(phrase):

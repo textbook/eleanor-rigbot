@@ -26,7 +26,8 @@ from eleanorrigbot import extract_phrase
     (
         'This is the best thing i\'ve ever seen https://t.co/vLGv1abHu8',
         'this is the best thing i\'ve ever seen'
-    )
+    ),
+    ('', ''),
 ])
 def test_extract_phrase(input_, output):
     assert extract_phrase(input_) == output

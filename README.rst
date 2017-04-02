@@ -25,16 +25,28 @@ You can install and launch the application using::
 or ``cf push`` it to `Cloud Foundry`_ using the manifest file (note that you
 will need to explicitly deactivate the health check, see `the CF docs`_).
 
+For additional configuration, you can pass arguments to the launch script::
+
+    usage: launch_rigbot.py [-h] [--verbose]
+                            [--location SW_LON SW_LAT NE_LON NE_LAT] [--version]
+
+    optional arguments:
+      -h, --help            show this help message and exit
+      --verbose, -v         set the logging level to DEBUG for more output
+      --location SW_LON SW_LAT NE_LON NE_LAT, -l SW_LON SW_LAT NE_LON NE_LAT
+                            specify a location to filter (defaults to Liverpool)
+      --version             show program's version number and exit
+
 Configuration
 -------------
 
 The following environment variables must be set to authenticate with the Twitter
 API:
 
- - ``TWITTER_API_KEY``
- - ``TWITTER_API_SECRET``
- - ``TWITTER_ACCESS_TOKEN``
- - ``TWITTER_ACCESS_TOKEN_SECRET``
+- ``TWITTER_API_KEY``
+- ``TWITTER_API_SECRET``
+- ``TWITTER_ACCESS_TOKEN``
+- ``TWITTER_ACCESS_TOKEN_SECRET``
 
 See `the Tweepy Authentication tutorial`_ for more information.
 

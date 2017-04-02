@@ -11,18 +11,16 @@ from .authenticate import get_authentication
 from .classify import phrase_matches
 from .extract import extract_phrase
 from .listen import RetweetListener
+from .parse_args import parse_args, __version__
 
-# https://www.flickr.com/places/info/12695850
-LIVERPOOL = [-3.0087, 53.3261, -2.8180, 53.4751]
-
-logging.getLogger(__name__).addHandler(logging.NullHandler())
+logger = logging.getLogger(__name__)
+logger.addHandler(logging.NullHandler())
 
 __author__ = 'Jonathan Sharpe'
-__version__ = '0.1.0'
 
 
-def start_listening():
-    """Start listening to the Twitter stream in Liverpool."""
+def start_listening(location):
+    """Start listening to the Twitter stream at the given location."""
     auth = get_authentication()
 
     listener = RetweetListener(
@@ -32,4 +30,6 @@ def start_listening():
     )
 
     stream = Stream(auth=auth, listener=listener)
-    stream.filter(locations=LIVERPOOL)
+
+    logger.info('starting to listen to the stream at %r', location)
+    stream.filter(locations=location)

@@ -56,5 +56,5 @@ setup(
     scripts=['scripts/launch_rigbot.py'],
     tests_require=['mock', 'pytest', 'pytest-pylint'],
     url='https://github.com/textbook/eleanor-rigbot',
-    version='0.1.0',
+    version='0.2.0',
 )

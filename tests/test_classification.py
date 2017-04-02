@@ -45,8 +45,14 @@ def test_logging(mock_logger):
     mock_logger.debug.assert_called_once_with(
         'processing %s-syllable tweet: %r',
         22,
-        text
+        [
+            ('over', 2), ('wing', 1), ('exit', 2), ('leaving', 2), ('the', 1),
+            ('plane', 1), ('as', 1), ('it', 1), ('falls', 1), ('like', 1),
+            ('a', 1), ('stone', 1), ('from', 1), ('the', 1), ('sky', 1),
+            ('final', 2), ('goodbye', 2),
+        ]
     )
+
     mock_logger.info.assert_called_once_with(
         'tweet matches syllable pattern: %r',
         [

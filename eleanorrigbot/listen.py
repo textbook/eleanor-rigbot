@@ -24,7 +24,12 @@ class RetweetListener(StreamListener):
 
     def on_status(self, status):
         """Called when a new status is streamed."""
-        logger.debug('received %r %r', status.id, status.text)
+        logger.debug(
+            'received %r from @%s: %r',
+            status.id,
+            status.author.screen_name,
+            status.text,
+        )
         if self.filterer(self.extractor(status.text)):
             logger.info('retweeting %r %r', status.id, status.text)
             self.api.retweet(status.id)

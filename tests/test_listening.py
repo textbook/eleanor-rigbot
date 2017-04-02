@@ -1,6 +1,6 @@
 from mock import Mock, patch
 import pytest
-from tweepy import API, Status
+from tweepy import API, Status, User
 
 from eleanorrigbot import RetweetListener
 
@@ -10,10 +10,12 @@ def api():
     return Mock(autospec=API)
 
 
-def create_tweet(id_, text):
+def create_tweet(id_, text, username):
     tweet = Mock(autospec=Status)
     tweet.id = id_
     tweet.text = text
+    tweet.author = Mock(autospec=User)
+    tweet.author.screen_name = username
     return tweet
 
 
@@ -23,7 +25,7 @@ def test_listener_match(api):
 
     listener = RetweetListener(api=api, extractor=extractor, filterer=filterer)
 
-    listener.on_status(create_tweet(123, 'foo bar baz'))
+    listener.on_status(create_tweet(123, 'foo bar baz', 'ClaraCoventry'))
     filterer.assert_called_once_with('hello world')
     extractor.assert_called_once_with('foo bar baz')
     api.retweet.assert_called_once_with(123)
@@ -34,7 +36,7 @@ def test_listener_no_match(api):
 
     listener = RetweetListener(api, filterer=filterer)
 
-    listener.on_status(create_tweet(123, 'hello world'))
+    listener.on_status(create_tweet(123, 'hello world', 'BobBurnquist'))
     filterer.assert_called_once_with('hello world')
     api.retweet.assert_not_called()
 
@@ -43,8 +45,13 @@ def test_listener_no_match(api):
 def test_logging(mock_logger, api):
     listener = RetweetListener(api)
 
-    listener.on_status(create_tweet(456, 'foo'))
-    mock_logger.debug.assert_called_once_with('received %r %r', 456, 'foo')
+    listener.on_status(create_tweet(456, 'foo', 'AliceAnderson'))
+    mock_logger.debug.assert_called_once_with(
+        'received %r from @%s: %r',
+        456,
+        'AliceAnderson',
+        'foo',
+    )
     mock_logger.info.assert_called_once_with('retweeting %r %r', 456, 'foo')
 
 

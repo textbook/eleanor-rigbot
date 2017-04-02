@@ -27,7 +27,13 @@ def phrase_matches(phrase):
     words = phrase.split()
     words_and_syllables = [(word, _syllables_in_word(word)) for word in words]
     total_syllables = _calculate_total_syllables(words_and_syllables)
-    logger.debug('processing %s-syllable tweet: %r', total_syllables, phrase)
+    if total_syllables is None:
+        return False
+    logger.debug(
+        'processing %s-syllable tweet: %r',
+        total_syllables,
+        words_and_syllables
+    )
     if total_syllables != 22:
         return False
     sub_phrases = _greedy_match_syllable_pattern(words_and_syllables)
@@ -62,14 +68,14 @@ def _calculate_total_syllables(words_and_syllables):
         and their syllable counts.
 
     Returns:
-      :py:class:`int`: The total syllable count, or ``0`` if any words
-        had no syllable count.
+      :py:class:`int`: The total syllable count, or ``None`` if any
+        words had no syllable count.
 
     """
     try:
         return sum(syllables for _, syllables in words_and_syllables)
     except TypeError:
-        return 0
+        pass
 
 
 def _greedy_match_syllable_pattern(words_and_syllables, pattern=(5, 4, 9, 4)):

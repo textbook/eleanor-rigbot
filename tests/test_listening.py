@@ -59,5 +59,27 @@ def test_logging(mock_logger, api):
 def test_error_logging(mock_logger, api):
     listener = RetweetListener(api)
 
+    listener.on_error(404)
+    mock_logger.error.assert_called_once_with('streaming error %s', 404)
+
+
+@patch('eleanorrigbot.listen.sleep')
+@patch('eleanorrigbot.listen.logger')
+def test_backoff(mock_logger, mock_sleep, api):
+    listener = RetweetListener(api)
+    listener.timeout = 4
+
     listener.on_error(420)
-    mock_logger.error.assert_called_once_with('streaming error %s', 420)
+    mock_logger.info.assert_called_once_with('timing out for %s seconds', 240)
+    mock_sleep.assert_called_once_with(240)
+
+    assert listener.timeout == 8
+
+
+def test_timeout_reset(api):
+    listener = RetweetListener(api)
+    listener.timeout = 8
+
+    listener.on_connect()
+
+    assert listener.timeout == 1

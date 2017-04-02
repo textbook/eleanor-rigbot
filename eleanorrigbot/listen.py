@@ -1,5 +1,6 @@
 """Functionality for listening to the Twitter stream."""
 import logging
+from time import sleep
 
 from tweepy import StreamListener
 
@@ -21,6 +22,10 @@ class RetweetListener(StreamListener):
         super(RetweetListener, self).__init__(api)
         self.extractor = extractor
         self.filterer = filterer
+        self.timeout = 1
+
+    def on_connect(self):
+        self.timeout = 1
 
     def on_status(self, status):
         """Called when a new status is streamed."""
@@ -37,4 +42,9 @@ class RetweetListener(StreamListener):
     def on_error(self, status_code):
         """Called when an error occurs."""
         logger.error('streaming error %s', status_code)
+        if status_code == 420:
+            timeout = self.timeout * 60
+            logger.info('timing out for %s seconds', timeout)
+            sleep(self.timeout * 60)
+            self.timeout *= 2  # exponential back-off
         return super(RetweetListener, self).on_error(status_code)

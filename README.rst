@@ -1,9 +1,9 @@
 Eleanor Rigby Robot
 ===================
 
-The code powering `@eleanorrigbot`_.
+.. contents:: The code powering `@eleanorrigbot`_.
 
-What are you?
+What is this?
 -------------
 
 See the `tracking issue`_ in my About repository.
@@ -14,8 +14,8 @@ See the `tracking issue`_ in my About repository.
 
     What will it find?
 
-How to run the bot
-------------------
+Running the bot
+---------------
 
 You can install and launch the application using::
 
@@ -60,16 +60,19 @@ You can run the tests with::
 
     python setup.py test
 
+Matching other phrases
+----------------------
+
 If you would like to match a different phrase, you can use the ``PhraseMatcher``
 to create an alternate matcher. For example:
 
 .. code-block:: python
 
     # https://www.flickr.com/places/info/12591829
-    napoli = [13.8509, 40.5360, 14.6697, 41.0201],
+    napoli = [13.8509, 40.5360, 14.6697, 41.0201]
 
     # "when the moon hits your eye like a big pizza pie"
-    that_is_amore = PhraseMatcher((3, 3, 3, 3), (None, 0, None, 0))
+    that_is_amore = PhraseMatcher((3, 3, 3, 3), (None, 'a', None, 'a'))
 
     start_listening(napoli, that_is_amore)
 

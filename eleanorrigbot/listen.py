@@ -25,7 +25,9 @@ class RetweetListener(StreamListener):
         self.timeout = 1
 
     def on_connect(self):
+        """Called when a connection is made."""
         self.timeout = 1
+        return super(RetweetListener, self).on_connect()
 
     def on_status(self, status):
         """Called when a new status is streamed."""
@@ -38,6 +40,7 @@ class RetweetListener(StreamListener):
         if self.filterer(self.extractor(status.text)):
             logger.info('retweeting %r %r', status.id, status.text)
             self.api.retweet(status.id)
+        return super(RetweetListener, self).on_status(status)
 
     def on_error(self, status_code):
         """Called when an error occurs."""

@@ -2,7 +2,7 @@
 import argparse
 import logging
 
-__version__ = '0.2.0'
+__version__ = '0.3.0'
 
 # https://www.flickr.com/places/info/12695850
 LIVERPOOL = [-3.0087, 53.3261, -2.8180, 53.4751]

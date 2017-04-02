@@ -25,6 +25,16 @@ You can install and launch the application using::
 or ``cf push`` it to `Cloud Foundry`_ using the manifest file (note that you
 will need to explicitly deactivate the health check, see `the CF docs`_).
 
+The following environment variables must be set to authenticate with the Twitter
+API:
+
+- ``TWITTER_API_KEY``
+- ``TWITTER_API_SECRET``
+- ``TWITTER_ACCESS_TOKEN``
+- ``TWITTER_ACCESS_TOKEN_SECRET``
+
+See `the Tweepy Authentication tutorial`_ for more information.
+
 For additional configuration, you can pass arguments to the launch script::
 
     usage: launch_rigbot.py [-h] [--verbose]
@@ -36,19 +46,6 @@ For additional configuration, you can pass arguments to the launch script::
       --location SW_LON SW_LAT NE_LON NE_LAT, -l SW_LON SW_LAT NE_LON NE_LAT
                             specify a location to filter (defaults to Liverpool)
       --version             show program's version number and exit
-
-Configuration
--------------
-
-The following environment variables must be set to authenticate with the Twitter
-API:
-
-- ``TWITTER_API_KEY``
-- ``TWITTER_API_SECRET``
-- ``TWITTER_ACCESS_TOKEN``
-- ``TWITTER_ACCESS_TOKEN_SECRET``
-
-See `the Tweepy Authentication tutorial`_ for more information.
 
 Development
 -----------
@@ -62,6 +59,19 @@ with::
 You can run the tests with::
 
     python setup.py test
+
+If you would like to match a different phrase, you can use the ``PhraseMatcher``
+to create an alternate matcher. For example:
+
+.. code-block:: python
+
+    # https://www.flickr.com/places/info/12591829
+    napoli = [13.8509, 40.5360, 14.6697, 41.0201],
+
+    # "when the moon hits your eye like a big pizza pie"
+    that_is_amore = PhraseMatcher((3, 3, 3, 3), (None, 0, None, 0))
+
+    start_listening(napoli, that_is_amore)
 
 .. _@eleanorrigbot: https://twitter.com/eleanorrigbot
 .. _Cloud Foundry: https://www.cloudfoundry.org/

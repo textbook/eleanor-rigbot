@@ -19,7 +19,7 @@ class RetweetListener(StreamListener):
     """Listens to the Twitter stream and retweets matching statuses."""
 
     def __init__(self, api=None, extractor=_all_text, filterer=_match_all):
-        super(RetweetListener, self).__init__(api)
+        super().__init__(api)
         self.extractor = extractor
         self.filterer = filterer
         self.timeout = 1
@@ -27,7 +27,7 @@ class RetweetListener(StreamListener):
     def on_connect(self):
         """Called when a connection is made."""
         self.timeout = 1
-        return super(RetweetListener, self).on_connect()
+        return super().on_connect()
 
     def on_status(self, status):
         """Called when a new status is streamed."""
@@ -40,7 +40,7 @@ class RetweetListener(StreamListener):
         if self.filterer(self.extractor(status.text)):
             logger.info('retweeting %r %r', status.id, status.text)
             self.api.retweet(status.id)
-        return super(RetweetListener, self).on_status(status)
+        return super().on_status(status)
 
     def on_error(self, status_code):
         """Called when an error occurs."""
@@ -50,4 +50,4 @@ class RetweetListener(StreamListener):
             logger.info('timing out for %s seconds', timeout)
             sleep(self.timeout * 60)
             self.timeout *= 2  # exponential back-off
-        return super(RetweetListener, self).on_error(status_code)
+        return super().on_error(status_code)

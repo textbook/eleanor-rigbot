@@ -11,10 +11,11 @@ def api():
     return Mock(autospec=API)
 
 
-def create_tweet(id_, text, username):
+def create_tweet(id_, text, username, full_text=None):
     tweet = Mock(autospec=Status)
     tweet.id = id_
     tweet.text = text
+    tweet.extended_tweet = {'full_text': full_text or text}
     tweet.author = Mock(autospec=User)
     tweet.author.screen_name = username
     return tweet
@@ -84,3 +85,26 @@ def test_timeout_reset(api):
     listener.on_connect()
 
     assert listener.timeout == 1
+
+
+def test_extended_tweets(api):
+    mock_extractor = Mock()
+    listener = RetweetListener(api, mock_extractor, Mock(return_value=False))
+    full_text = 'foo bar baz'
+    tweet = create_tweet(123, 'foo', 'DeweyDuck', full_text)
+
+    listener.on_status(tweet)
+
+    mock_extractor.assert_called_once_with(full_text)
+
+
+def test_unextended_tweets(api):
+    mock_extractor = Mock()
+    listener = RetweetListener(api, mock_extractor, Mock(return_value=False))
+    short_text = 'foo'
+    tweet = create_tweet(123, short_text, 'DeweyDuck', 'foo bar baz')
+    del tweet.extended_tweet
+
+    listener.on_status(tweet)
+
+    mock_extractor.assert_called_once_with(short_text)

@@ -31,14 +31,15 @@ class RetweetListener(StreamListener):
 
     def on_status(self, status):
         """Called when a new status is streamed."""
+        text = self._get_text(status)
         logger.debug(
             'received %r from @%s: %r',
             status.id,
             status.author.screen_name,
-            status.text,
+            text,
         )
-        if self.filterer(self.extractor(status.text)):
-            logger.info('retweeting %r %r', status.id, status.text)
+        if self.filterer(self.extractor(text)):
+            logger.info('retweeting %r %r', status.id, text)
             self.api.retweet(status.id)
         return super().on_status(status)
 
@@ -51,3 +52,10 @@ class RetweetListener(StreamListener):
             sleep(self.timeout * 60)
             self.timeout *= 2  # exponential back-off
         return super().on_error(status_code)
+
+    @staticmethod
+    def _get_text(status):
+        try:
+            return status.extended_tweet['full_text']
+        except (AttributeError, KeyError):
+            return status.text

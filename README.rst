@@ -20,13 +20,12 @@ Running the bot
 You can install and launch the application using::
 
     python setup.py install
-    launch_rigbot.py
+    python launch_rigbot.py
 
-or ``cf push`` it to `Cloud Foundry`_ using the manifest file (note that you
-will need to explicitly deactivate the health check, see `the CF docs`_).
+or ``cf push`` it to `Cloud Foundry`_ using the ``manifest.yml`` file.
 
 The following environment variables must be set to authenticate with the Twitter
-API:
+API (e.g. using ``cf set-env <app> <var> <value>``):
 
 - ``TWITTER_API_KEY``
 - ``TWITTER_API_SECRET``
@@ -78,6 +77,5 @@ to create an alternate matcher. For example:
 
 .. _@eleanorrigbot: https://twitter.com/eleanorrigbot
 .. _Cloud Foundry: https://www.cloudfoundry.org/
-.. _the CF docs: https://docs.cloudfoundry.org/devguide/deploy-apps/manifest.html#no-route
 .. _the Tweepy Authentication tutorial: http://tweepy.readthedocs.io/en/v3.5.0/auth_tutorial.html
 .. _tracking issue: https://github.com/textbook/about/issues/12

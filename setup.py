@@ -42,6 +42,8 @@ setup(
         'Natural Language :: English',
         'Operating System :: OS Independent',
         'Programming Language :: Python',
+        'Programming Language :: Python :: 3',
+        'Programming Language :: Python :: 3 :: Only',
         'Topic :: Communications :: Chat',
         'Topic :: Text Processing :: Linguistic',
     ],
@@ -54,7 +56,7 @@ setup(
     packages=['eleanorrigbot'],
     platforms='any',
     scripts=['scripts/launch_rigbot.py'],
-    tests_require=['mock', 'pytest', 'pytest-pylint'],
+    tests_require=['pylint', 'pytest', 'pytest-pylint'],
     url='https://github.com/textbook/eleanor-rigbot',
-    version='0.3.0',
+    version='0.4.0',
 )

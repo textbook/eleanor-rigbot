@@ -1,0 +1,18 @@
+os: linux
+dist: bionic
+
+language: python
+python:
+  - '3.7.7'
+
+script: python setup.py test
+
+deploy:
+  - provider: cloudfoundry
+    api: https://api.run.pcfone.io
+    username: $CF_USERNAME
+    password: $CF_PASSWORD
+    organization: pivot-jsharpe
+    space: development
+    on:
+      branch: main

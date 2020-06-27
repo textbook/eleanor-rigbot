@@ -9,7 +9,7 @@ from pronouncing import phones_for_word, rhymes, syllable_count
 logger = logging.getLogger(__name__)
 
 
-class PhraseMatcher(object):  # pylint: disable=too-few-public-methods
+class PhraseMatcher:  # pylint: disable=too-few-public-methods
     """Class to match phrases found in tweets.
 
     Arguments:

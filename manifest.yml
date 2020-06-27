@@ -2,7 +2,7 @@
 applications:
 - name: eleanor-rigbot
   buildpacks:
-    - https://github.com/cloudfoundry/python-buildpack.git#v1.6.36
+    - https://github.com/cloudfoundry/python-buildpack.git#v1.7.15
   command: python launch_rigbot.py --verbose
   disk_quota: 512M
   memory: 256M
